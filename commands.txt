@@ -1,0 +1,5 @@
+# Instalation Tutorial:
+https://bitbucket.org/icl/papi/wiki/Downloading-and-Installing-PAPI
+
+# Commmand line
+g++ -std=c++11 simple_array_sum.cpp papito.cpp -I$PWD/../papi/install/include -L$PWD/../papi/install/lib $PWD/../papi/install/lib/libpapi.a -o simple_array_sum -fopenmp -lpapi
