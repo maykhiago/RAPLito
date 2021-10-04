@@ -20,4 +20,4 @@ It is necesary to insert three simple commands in you code (see ***rapl.h***):
 
 ***start_rapl_sysfs()*** Start measuring the energy;
 
-***end_rapl_sysfs()*** Finnish the measurement and print the final results.
+***end_rapl_sysfs()*** Finnish the measurement and returns the final result.
