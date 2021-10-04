@@ -121,7 +121,7 @@ void BenchmarkKernel(const CLApp &cli, const GraphT_ &g,
     
     auto result = kernel(g);
     double energy_curr = 0.0;
-    double energy_curr = end_rapl_sysfs(); //Hiago MGA Rocha (04/10/2021)
+    energy_curr = end_rapl_sysfs(); //Hiago MGA Rocha (04/10/2021)
 
     trial_timer.Stop();
 
@@ -146,6 +146,8 @@ void BenchmarkKernel(const CLApp &cli, const GraphT_ &g,
 
     }
   }
+	
+  printf("\n");
   PrintTime("Average Time", total_seconds / cli.num_trials());
   printf("Average Energy %.4f\n", total_energy / cli.num_trials());
   printf("Average EDP %.4f\n", total_edp / cli.num_trials());
