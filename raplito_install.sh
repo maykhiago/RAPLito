@@ -18,7 +18,7 @@ echo ">>>>>>> Copying the modified files"
 cp RAPLito/GAPBS/*.cpp gapbs/src
 cp RAPLito/GAPBS/*.cc gapbs/src
 cp RAPLito/GAPBS/*.h gapbs/src
-cp RAPLito/GAPBS/*.in gapbs/src
+#cp RAPLito/GAPBS/*.in gapbs/src
 cp RAPLito/GAPBS/Makefile gapbs/
 
 cd gapbs
