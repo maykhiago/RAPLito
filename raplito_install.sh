@@ -29,4 +29,16 @@ make
 echo ">>>>>>> Running PageRank Algorithm"
 ./pr -f test/graphs/4.el -n1
 
+cd ..
+
+echo ">>>>>>> Copying NAS repository"
+cp -r RAPLito/NPB-OMP/ .
+cd NPB-OMP/
+
+echo ">>>>>>> Compilling"
+./compile_all.sh
+
+echo ">>>>>>> Running bt.A"
+bin/bt.A
+
 cd ../RAPLito
