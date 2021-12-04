@@ -1,19 +1,3 @@
-//#include <sys/types.h>
-//#include <sys/stat.h>
-//#include <fcntl.h>
-//#include <errno.h>
-//#include <inttypes.h>
-//#include <math.h>
-//#include <sys/syscall.h>
-//#include <linux/perf_event.h>
-//#include <unistd.h>
-//#include <stdint.h>
-//#include <stdio.h>
-//#include <omp.h>
-
-/* deal with rapl overflow */
-//#include <iostream>
-
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -23,7 +7,7 @@
 using namespace std;
 
 #define PERIODO  60 /* a cada segundo */
-#define MAX_READ 30
+#define MAX_READ 60
 
 
 /*define RAPL Environment*/

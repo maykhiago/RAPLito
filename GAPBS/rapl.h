@@ -21,7 +21,7 @@
 using namespace std;
 
 #define PERIODO  60 /* a cada segundo */
-#define MAX_READ 30
+#define MAX_READ 60
 
 
 /*define RAPL Environment*/

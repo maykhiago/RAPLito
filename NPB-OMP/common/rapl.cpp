@@ -120,6 +120,9 @@ void start_rapl_sysfs_global(void){
                         sprintf(filenames[j][i],"%s/intel-rapl:%d:%d/energy_uj", packname[j],j,i-1);
                 }
         }
+
+    signal(SIGALRM, ALARMhandler); /* install the handler    */
+    alarm(PERIODO);                /* set alarm clock       */
 }
 
 void cleanAll()
@@ -144,8 +147,8 @@ void cleanAll()
 void start_rapl_sysfs(){
 
     // Mudar depois
-    start_rapl_sysfs_global();
-    cleanAll(); // limpa todos os valores
+    //start_rapl_sysfs_global();
+    //cleanAll(); // limpa todos os valores
 
     int i,j;
     FILE *fff;
@@ -168,8 +171,8 @@ void start_rapl_sysfs(){
         }
 
 	read_count_energy = 1;
-	signal(SIGALRM, ALARMhandler); /* install the handler    */
-	alarm(PERIODO);                /* set alarm clock       */
+	//signal(SIGALRM, ALARMhandler); /* install the handler    */
+	//alarm(PERIODO);                /* set alarm clock       */
 
 }
 
