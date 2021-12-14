@@ -11,7 +11,7 @@ echo ">>>>>>> Running example code"
 
 cd ..
 
-echo ">>>>>>> Cloning PAPI repository"
+echo ">>>>>>> Cloning GAPBS repository"
 git clone https://github.com/sbeamer/gapbs.git
 
 echo ">>>>>>> Copying the modified files"
@@ -40,5 +40,21 @@ echo ">>>>>>> Compilling"
 
 echo ">>>>>>> Running bt.A"
 bin/bt.A
+
+cd ..
+
+echo ">>>>>>> Cloning Ligra repository"
+git clone https://github.com/jshun/ligra.git
+
+echo ">>>>>>> Copying the modified files"
+cp RAPLito/Ligra/*.h ligra/ligra
+
+cd ligra/apps
+
+echo ">>>>>>> Compilling"
+make
+
+echo ">>>>>>> Running PageRank Algorithm"
+./BellmanFord -f ../inputs/rMatGraph_WJ_5_100
 
 cd ../RAPLito
