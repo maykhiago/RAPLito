@@ -43,18 +43,20 @@ bin/bt.A
 
 cd ..
 
+export OPENMP=true
 echo ">>>>>>> Cloning Ligra repository"
 git clone https://github.com/jshun/ligra.git
 
 echo ">>>>>>> Copying the modified files"
 cp RAPLito/Ligra/*.h ligra/ligra
+cp RAPLito/Ligra/Makefile ligra/apps
 
 cd ligra/apps
 
 echo ">>>>>>> Compilling"
 make
 
-echo ">>>>>>> Running PageRank Algorithm"
+echo ">>>>>>> Running BellamFord Algorithm"
 ./BellmanFord -f ../inputs/rMatGraph_WJ_5_100
 
-cd ../RAPLito
+cd ../../RAPLito
