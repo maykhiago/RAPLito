@@ -553,8 +553,9 @@ int parallel_main(int argc, char* argv[]) {
         startTime();
         start_rapl_sysfs();
         Compute(G,P);
-        nextTime("Running time");
         energy_curr = end_rapl_sysfs();
+        nextTime("Running time");
+        
         printf("Energy : %.4f\n\n", energy_curr);
 
         if(G.transposed) G.transpose();
