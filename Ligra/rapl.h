@@ -58,7 +58,7 @@ double end_rapl_parcial_reading();
 /*---------------------------*/
 
 /* Implementation */
-// Hiago MGA Rocha (14/21/2021)
+// Hiago MGA Rocha (14/12/2021)
 static int package_map[MAX_PACKAGES];
 static int total_packages=0, total_cores=0;
 char rapl_domain_names[NUM_RAPL_DOMAINS][30]= {"energy-cores", "energy-gpu", "energy-pkg", "energy-ram"};
@@ -90,6 +90,7 @@ void rapl_init()
   /*End initialization of RAPL */
   start_rapl_sysfs_global(); /* chamar so 1 vez*/
 }
+
 
 /* Function used by the Intel RAPL to detect the CPU Architecture*/
 void detect_cpu(){
@@ -178,18 +179,15 @@ void start_rapl_sysfs_global(void){
                         sprintf(filenames[j][i],"%s/intel-rapl:%d:%d/energy_uj", packname[j],j,i-1);
                 }
         }
-
-    signal(SIGALRM, ALARMhandler); /* install the handler    */
-    alarm(PERIODO);                /* set alarm clock       */
 }
 
 void cleanAll()
 {
     leituras = 0;
 
-    for(int j=0;j<total_packages;j++)
+    for(int j=0;j<total_packages;j++) 
     {
-        for(int i=0;i<NUM_RAPL_DOMAINS;i++)
+        for(int i=0;i<NUM_RAPL_DOMAINS;i++) 
         {
             kernelBefore[j][i] = 0.0;
             kernelAfter[j][i] = 0.0;
@@ -205,12 +203,12 @@ void cleanAll()
 void start_rapl_sysfs(){
 
     // Mudar depois
-    //start_rapl_sysfs_global();
-    //cleanAll(); // limpa todos os valores
+    start_rapl_sysfs_global();
+    cleanAll(); // limpa todos os valores
 
     int i,j;
     FILE *fff;
-	 /* Gather before values */
+         /* Gather before values */
 
         for(j=0;j<total_packages;j++) {
                 for(i=0;i<NUM_RAPL_DOMAINS;i++) {
@@ -222,15 +220,15 @@ void start_rapl_sysfs(){
                                 else {
                                         fscanf(fff,"%lld",&kernelBefore[j][i]);
                                         fclose(fff);
-									//printf("%d %d %lld", j, i, kernelBefore[j][i]);
+                                                                        //printf("%d %d %lld", j, i, kernelBefore[j][i]);
                                 }
                         }
                 }
         }
 
-	read_count_energy = 1;
-	//signal(SIGALRM, ALARMhandler); /* install the handler    */
-	//alarm(PERIODO);                /* set alarm clock       */
+        read_count_energy = 1;
+        signal(SIGALRM, ALARMhandler); /* install the handler    */
+        alarm(PERIODO);                /* set alarm clock       */
 
 }
 
@@ -254,64 +252,64 @@ double end_rapl_sysfs(){
                 }
         }
 
-	/*********************************************************/
+        /*********************************************************/
 
       /*  for(j=0;j<total_packages;j++) {
                 for(i=0;i<NUM_RAPL_DOMAINS;i++) {
                         if(valid[j][i]){
                                 if(strcmp(event_names[j][i],"core")!=0 && strcmp(event_names[j][i],"uncore")!=0){
-					double after  = (double)kernelAfter[j][i];
-					double before = (double)kernelBefore[j][i];
-					if(before < after){
-						total += ((after-before)/1000000.0);
-					}else{
-						total += (((max_energy_range_uj-before)+ after)/1000000.0);
-					}
+                                        double after  = (double)kernelAfter[j][i];
+                                        double before = (double)kernelBefore[j][i];
+                                        if(before < after){
+                                                total += ((after-before)/1000000.0);
+                                        }else{
+                                                total += (((max_energy_range_uj-before)+ after)/1000000.0);
+                                        }
                                 }
                         }
                 }
         }
-		printf("total energy %f \n", total);*/
+                printf("total energy %f \n", total);*/
 
-	/*********************************************************/
+        /*********************************************************/
         return end_rapl_parcial_reading();
 }
 
 double end_rapl_parcial_reading(){
-	int i, j, k;
+        int i, j, k;
     double total=0;
 
-	for(j=0;j<total_packages;j++) {
-    	for(i=0;i<NUM_RAPL_DOMAINS;i++) {
-        	if(valid[j][i]){
-            	if(strcmp(event_names[j][i],"core")!=0 && strcmp(event_names[j][i],"uncore")!=0){
-					double before = (double)kernelBefore[j][i];
-                	for(k=0;k<leituras;k++) {
-						double current = (double) parcial[k][j][i];
+        for(j=0;j<total_packages;j++) {
+        for(i=0;i<NUM_RAPL_DOMAINS;i++) {
+                if(valid[j][i]){
+                if(strcmp(event_names[j][i],"core")!=0 && strcmp(event_names[j][i],"uncore")!=0){
+                                        double before = (double)kernelBefore[j][i];
+                        for(k=0;k<leituras;k++) {
+                                                double current = (double) parcial[k][j][i];
 
-						if(before < current)
+                                                if(before < current)
                         {
-							total += ((current-before)/1000000.0);
-						}else{
-							total += (((max_energy_range_uj-before)+ current)/1000000.0);
-						}
+                                                        total += ((current-before)/1000000.0);
+                                                }else{
+                                                        total += (((max_energy_range_uj-before)+ current)/1000000.0);
+                                                }
 
-						before = current;
-					}
+                                                before = current;
+                                        }
 
-					double after  = (double)kernelAfter[j][i];
-					if(before < after){
-						total += ((after-before)/1000000.0);
-					}else{
-						total += (((max_energy_range_uj-before)+ after)/1000000.0);
-					}
+                                        double after  = (double)kernelAfter[j][i];
+                                        if(before < after){
+                                                total += ((after-before)/1000000.0);
+                                        }else{
+                                                total += (((max_energy_range_uj-before)+ after)/1000000.0);
+                                        }
 
-				}
-        	}
-    	}
+                                }
+                }
+        }
 
         //cout << "total (time): " << total << endl;
-	}
+        }
     return total;
 }
 
@@ -319,14 +317,14 @@ double end_rapl_parcial_reading(){
 
 void ALARMhandler(int sig) {
     if(read_count_energy){
-		int i, j;
+                int i, j;
         FILE *fff;
         for(j=0;j<total_packages;j++) {
             for(i=0;i<NUM_RAPL_DOMAINS;i++) {
-            	if (valid[j][i]) {
-                	fff=fopen(filenames[j][i],"r");
+                if (valid[j][i]) {
+                        fff=fopen(filenames[j][i],"r");
                     if (fff==NULL) {
-                    	fprintf(stderr,"\tError opening %s!\n",filenames[j][i]);
+                        fprintf(stderr,"\tError opening %s!\n",filenames[j][i]);
                     }else {
                         fscanf(fff,"%lld",&parcial[leituras][j][i]);
                         fclose(fff);
@@ -334,17 +332,17 @@ void ALARMhandler(int sig) {
                 }
             }
         }
-		alarm(PERIODO);
-		leituras++;
-	}
+                alarm(PERIODO);
+                leituras++;
+        }
 }
 
 /*from: /sys/devices/virtual/powercap/intel-rapl/intel-rapl:0/max_energy_range_uj*/
 void detect_max_energy_range_uj(){
-	long long max;
-	FILE * file = fopen("/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0/max_energy_range_uj","r");
-	fscanf(file, "%lld", &max);
-	max_energy_range_uj = (double) max;
-  	//printf("%.2f\n", max_energy_range_uj);
-	fclose(file);
+        long long max;
+        FILE * file = fopen("/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0/max_energy_range_uj","r");
+        fscanf(file, "%lld", &max);
+        max_energy_range_uj = (double) max;
+        //printf("%.2f\n", max_energy_range_uj);
+        fclose(file);
 }
