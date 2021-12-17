@@ -59,4 +59,22 @@ make
 echo ">>>>>>> Running BellamFord Algorithm"
 ./BellmanFord -f ../inputs/rMatGraph_WJ_5_100
 
-cd ../../RAPLito
+cd ../..
+
+export OPENMP=true
+echo ">>>>>>> Cloning Polymer repository"
+git clone https://github.com/realstolz/polymer.git
+
+echo ">>>>>>> Copying the modified files"
+cp RAPLito/Polymer/*.h polymer
+cp RAPLito/Polymer/Makefile polymer
+
+cd polymer
+
+echo ">>>>>>> Compilling"
+make
+
+echo ">>>>>>> Running BellamFord Algorithm"
+./numa-BellmanFord ../ligra/inputs/rMatGraph_WJ_5_100
+
+cd ../RAPLito
