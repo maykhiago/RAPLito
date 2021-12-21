@@ -68,6 +68,7 @@ git clone https://github.com/realstolz/polymer.git
 echo ">>>>>>> Copying the modified files"
 cp RAPLito/Polymer/*.h polymer
 cp RAPLito/Polymer/Makefile polymer
+cp RAPLito/Polymer/*.C polymer
 
 cd polymer
 
