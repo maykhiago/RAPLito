@@ -17,12 +17,6 @@ short int auroraTotalCores=0;
 
 typeFrame auroraKernels[MAX_KERNEL];
 
-/*-----------------------------*/
-long long parcial[MAX_READ][MAX_PACKAGES][NUM_RAPL_DOMAINS];
-short int read_count_energy = 1;
-short int leituras = 0;
-/*---------------------------*/
-
 void detect_packages()
 {
 	char filename[STRING_BUFFER];

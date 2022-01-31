@@ -61,8 +61,3 @@ void rapl_init(void);
 void detect_packages(void);
 void start_rapl_sysfs(void); //AMD aurora_start_amd_msr()
 double end_rapl_sysfs(void); //AMD aurora_end_amd_msr()
-
-/*-----------------------------*/
-void ALARMhandler(int);
-double end_rapl_parcial_reading();
-/*---------------------------*/
